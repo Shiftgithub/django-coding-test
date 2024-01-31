@@ -19,7 +19,7 @@ class ProductForm(ModelForm):
         model = Product
         fields = '__all__'
         widgets = {
-            'title': TextInput(attrs={'class': 'form-control'}),
-            'sku': TextInput(attrs={'class': 'form-control'}),
-            'description': Textarea(attrs={'class': 'form-control'}),
+            'title': TextInput(attrs={'class': 'form-control','placeholder': 'Product Name'}),
+            'sku': TextInput(attrs={'class': 'form-control','placeholder': 'Product SKU'}),
+            'description': Textarea(attrs={'class': 'form-control','placeholder': 'Product Description'}),
         }
