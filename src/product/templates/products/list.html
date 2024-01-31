@@ -15,6 +15,9 @@
             <div class="col-md-2">
                 <select name="variant" id="" class="form-control">
                     <option selected disabled>--Select A Variant--</option>
+                    {% for variant in variants %}
+                    <option>{{ variant.title }}</option>
+                    {% endfor %}
 
                 </select>
             </div>
@@ -128,13 +131,19 @@
                         {% endfor %}
                         Created at: <br>{{ product.created_at|date:"d-M-Y" }}
                     </td>
-                    <td>{{ product.description }}</td>
+                    <td>
+                        {% for word in product.description.split %}
+                        {{ word }}<br>
+                        {% endfor %}
+                    </td>
                     <td>
                         <div id="variant{{ forloop.counter }}" class="variant-wrapper">
                             {% for product_variant_price in product.productvariantprice_set.all %}
                             <dl class="row mb-0 variant" style="height: 80px; overflow: hidden">
                                 <dt class="col-sm-3 pb-0">
-                                    {{ product_variant_price.variant_title }}
+                                    {{ product_variant_price.product_variant_one.variant_title|upper }}/
+                                    {{ product_variant_price.product_variant_two.variant_title|capfirst }}/
+                                    {{ product_variant_price.product_variant_three.variant_title|capfirst }}
                                 </dt>
                                 <dd class="col-sm-9">
                                     <dl class="row mb-0">
@@ -145,8 +154,7 @@
                             </dl>
                             {% endfor %}
                         </div>
-                        <button onclick="toggleVariants({{ forloop.counter }})" class="btn btn-sm btn-link">
-                            Show more
+                        <button onclick="toggleVariants({{ forloop.counter }})" class="btn btn-sm btn-link">Show more
                         </button>
                     </td>
                     <td>
@@ -171,10 +179,14 @@
         </div>
     </div>
 </div>
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     function toggleVariants(counter) {
         var variantDiv = document.getElementById('variant' + counter);
         variantDiv.classList.toggle('show-all');
     }
 </script>
+{% endblock %}
+
 {% endblock %}

@@ -27,8 +27,10 @@ class BaseProductView(generic.View):
 
 def product_list(request):
     products = Product.objects.all()
+    variants = Variant.objects.all()
     product_variant_prices = ProductVariantPrice.objects.all()
     context = {
+        'variants': variants,
         'products': products,
         'product_variant_prices': product_variant_prices,
     }
