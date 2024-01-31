@@ -13,7 +13,6 @@ class BaseProductView(generic.View):
     success_url = '/product/list'
 
 
-
 class ProductListView(ListView):
     model = Product
     template_name = 'products/list.html'
@@ -41,15 +40,15 @@ class ProductListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         title = self.request.GET.get('title')
-        variant = self.request.GET.get('variant')
+        # variant = self.request.GET.get('variant')
         price_from = self.request.GET.get('price_from')
         price_to = self.request.GET.get('price_to')
         date = self.request.GET.get('date')
 
         if title:
             queryset = queryset.filter(title__icontains=title)
-        if variant:
-            queryset = queryset.filter(variant__variant_title__icontains=variant)
+        # if variant:
+        #     queryset = queryset.filter(variant__variant_title__icontains=variant)
         if price_from:
             queryset = queryset.filter(productvariantprice__price__gte=price_from)
         if price_to:
@@ -58,7 +57,6 @@ class ProductListView(ListView):
             queryset = queryset.filter(created_at__date=date)
 
         return queryset
-
 
 
 def edit_product(request, id):
